@@ -53,7 +53,7 @@ module Lightspeed
 
     def handle_success(response)
       json = JSON.parse(response.body)
-      pp json if self.class.verbose?
+      # pp json if self.class.verbose?
       json
     end
 
