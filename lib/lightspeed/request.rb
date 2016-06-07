@@ -45,6 +45,7 @@ module Lightspeed
         handle_error(response)
       end
     rescue Lightspeed::Error::Throttled
+      p response.code
       retry_throttled_request
     end
 
