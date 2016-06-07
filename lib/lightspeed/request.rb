@@ -58,7 +58,7 @@ module Lightspeed
 
     def retry_throttled_request
       @throttle_wait_time += 2
-      puts "retrying throttled request after #{@throttle_wait_time}." if self.class.verbose?
+      puts "retrying throttled request after #{@throttle_wait_time}."
       sleep @throttle_wait_time
       perform
     end
