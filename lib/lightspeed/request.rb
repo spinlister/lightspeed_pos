@@ -3,9 +3,7 @@ require 'net/http'
 
 module Lightspeed
   class Request
-    attr_accessor :raw_request, :bucket_max, :bucket_level
-
-    SECONDS_TO_WAIT_WHEN_THROTTLED = 60 # API requirements.
+    attr_accessor :raw_request, :bucket_max, :bucket_level, :throttle_wait_time
 
     class << self
       attr_writer :verbose
@@ -29,6 +27,7 @@ module Lightspeed
       @path = path
       @bucket_max = Float::INFINITY
       @bucket_level = 0
+      @throttle_wait_time = 0
       @http = Net::HTTP.new(self.class.base_host, 443)
       @http.use_ssl = true
       @raw_request = request_class.new(uri)
@@ -58,8 +57,9 @@ module Lightspeed
     end
 
     def retry_throttled_request
-      puts 'retrying throttled request after 60s.' if self.class.verbose?
-      sleep SECONDS_TO_WAIT_WHEN_THROTTLED
+      @throttle_wait_time += 2
+      puts "retrying throttled request after #{@throttle_wait_time}." if self.class.verbose?
+      sleep @throttle_wait_time
       perform
     end
 
