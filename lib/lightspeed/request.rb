@@ -38,6 +38,7 @@ module Lightspeed
     end
 
     def perform
+      puts "[LS PoS Gem] Requesting #{raw_request.path}" if self.class.verbose?
       response = @http.request(raw_request)
       extract_rate_limits(response)
       if response.code == "200"
@@ -53,7 +54,7 @@ module Lightspeed
 
     def handle_success(response)
       json = JSON.parse(response.body)
-      pp json if self.class.verbose?
+      # pp json if self.class.verbose?
       json
     end
 
