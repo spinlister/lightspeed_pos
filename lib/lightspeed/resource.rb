@@ -148,6 +148,10 @@ module Lightspeed
       end
     end
 
+    def load_relations_default
+      nil
+    end
+
     private
 
     def fields_to_h
@@ -194,7 +198,7 @@ module Lightspeed
     end
 
     def get(params: {})
-      params = { load_relations: 'all' }.merge(context_params).merge(params)
+      params = { load_relations: load_relations_default }.merge(context_params).merge(params)
       client.get(
         path: resource_path,
         params: params

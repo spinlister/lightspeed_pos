@@ -89,8 +89,8 @@ module Lightspeed
       enum(per_page: per_page, params: params).each(&block)
     end
 
-    def find(id)
-      first(params: { resource_class.id_field => id }) || handle_not_found(id)
+    def find(id, params: {})
+      first(params: params.merge({ resource_class.id_field => id })) || handle_not_found(id)
     end
 
     def create(attributes = {})
@@ -141,7 +141,7 @@ module Lightspeed
     end
 
     def load_relations_default
-      'all'
+      nil
     end
 
     private
