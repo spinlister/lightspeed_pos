@@ -18,6 +18,7 @@ module Lightspeed
       customerTypeID: :integer,
       discountID: :integer,
       taxCategoryID: :integer,
+      Contact: :hash,
     )
   end
 end
